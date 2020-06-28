@@ -13,13 +13,21 @@ const studentsFilePath = path.join(__dirname, "students.json")
 const downloadPath = path.join(__dirname, "../img")
 const upload = multer()
 
+//single image upload
+// studentsRouter.post("/", upload.single("file"), (req, res)=>{
+//     fs.writeFileSync(path.join(downloadPath, req.file.originalname), req.file.buffer)
+//     res.send("img was uploaded")
+// })
 
-studentsRouter.post("/", upload.single("file"), (req, res)=>{
-    fs.writeFileSync(path.join(downloadPath, req.file.originalname), req.file.buffer)
-    res.send("img was uploaded")
+
+//multiple images upload
+studentsRouter.post("/", upload.array("file"), (req, res)=> {
+    const arrayImg = req.files.map(img =>
+        fs.writeFileSync(path.join(downloadPath, img.originalname), img.buffer)
+        )
+        Promise.all(arrayImg)
+        res.send("img was uploaded")
 })
-
-
 
 
 studentsRouter.get("/", (req, res) => {
