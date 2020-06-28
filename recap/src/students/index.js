@@ -1,5 +1,7 @@
 const express = require("express")
 const path = require("path")
+const uniqid = require("uniqid")
+const fs = require("fs-extra")
 const readFile = require("../utilities")
 const { request, response } = require("express")
 
@@ -40,7 +42,12 @@ studentsRouter.get("/:id", (req, res) => {
 
 
 studentsRouter.post("/", (req, res) => {
-    res.send("ok")
+    const newStudent = { ...req.body, id: uniqid(), createdAt: new Date(), numberOfProjects: 0,}
+    console.log(newStudent)
+    const arrayOfStudents = readFile(studentsFilePath)
+    arrayOfStudents.push(newStudent)
+    fs.writeFileSync(studentsFilePath, JSON.stringify(arrayOfStudents))
+    res.status(201).send(newStudent)
 })
 
 

@@ -6,6 +6,8 @@ const server = express()
 
 const port = process.env.PORT || 3002
 
+server.use(express.json())
+
 server.use("/students", studentsRouter)
 
 console.log(listEndpoints(server))
