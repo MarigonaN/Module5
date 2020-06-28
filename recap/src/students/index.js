@@ -4,9 +4,21 @@ const uniqid = require("uniqid")
 const fs = require("fs-extra")
 const readFile = require("../utilities")
 const { request, response } = require("express")
+const multer = require("multer")
+
+
 
 const studentsRouter = express.Router()
 const studentsFilePath = path.join(__dirname, "students.json")
+const downloadPath = path.join(__dirname, "../img")
+const upload = multer()
+
+
+studentsRouter.post("/", upload.single("file"), (req, res)=>{
+    fs.writeFileSync(path.join(downloadPath, req.file.originalname), req.file.buffer)
+    res.send("img was uploaded")
+})
+
 
 
 

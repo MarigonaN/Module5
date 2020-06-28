@@ -10,6 +10,7 @@ server.use(express.json())
 
 server.use("/students", studentsRouter)
 
+server.use("/upload", studentsRouter)
 console.log(listEndpoints(server))
 
 server.listen(port, () => {
