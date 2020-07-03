@@ -14,22 +14,6 @@ const upload = multer({})
 const moviesRouter = express.Router()
 
 
-// moviesRouter.post("/:imdbID/reviews", async(req, res, next) => {
-//   console.log("ENTERING")
-//   const movies = await readDB(moviesJsonPath)
-//   const movie = movies.find((b) => b.imdbID === req.params.imdbID)
-//   if (movie) { 
-//     const reviews = await readDB(reviewsJsonPath)
-//     reviews.push({...req.body, createdAt: new Date(), movieID: req.params.imdbID})
-//     await writeDB(reviewsJsonPath, reviews)
-//     res.send("OK")
-//   }
-//   else {
-//     const error = new Error(`movie with imdbID ${req.params.imdbID} not found`)
-//     error.httpStatusCode = 404
-//     next(error)
-//   }
-// })
 
 moviesRouter.get("/", async (req, res, next) => {
   try {
@@ -97,10 +81,6 @@ moviesRouter.post(
   }
 )
 
-// moviesRouter.get("/:imdbID/reviews", async (req, res, next)=>{
-//   const reviews = await readDB(reviewsJsonPath)
-//   res.send(reviews.filter(review => review.movieID === req.params.imdbID))
-// })
 
 
 moviesRouter.put("/:imdbID", async (req, res, next) => {
@@ -147,7 +127,7 @@ moviesRouter.post("/:imdbID/upload", upload.single("avatar"), async (req, res, n
   try {
     const fileName = req.params.imdbID + path.extname(req.file.originalname)
     const fileDestination = join(moviesFolder, fileName)
-    
+
     await fs.writeFile(
       fileDestination,
       req.file.buffer
@@ -157,7 +137,7 @@ moviesRouter.post("/:imdbID/upload", upload.single("avatar"), async (req, res, n
     const movie = movies.find((b) => b.imdbID === req.params.imdbID)
     if (movie) {
       const position = movies.indexOf(movie)
-      const movieUpdated = { ...movie, Poster: "http://localhost:3001/img/movies/"  + fileName} // In this way we can also implement the "patch" endpoint
+      const movieUpdated = { ...movie, Poster: "http://localhost:3001/img/movies/" + fileName } // In this way we can also implement the "patch" endpoint
       movies[position] = movieUpdated
       await writeDB(moviesJsonPath, movies)
       res.status(200).send("Updated")
