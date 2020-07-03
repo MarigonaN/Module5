@@ -26,3 +26,4 @@ const badRequestHandler = (err, req, res, next) => {
     notFoundHandler,
     genericErrorHandler,
   }
+  
