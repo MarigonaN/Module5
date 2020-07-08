@@ -5,5 +5,12 @@
         "rate": 3,
         "elementId": "5d318e1a8541744830bef139",
         "createdAt": "2019-08-01T12:46:45.895Z"
+    },
+    {
+        "_id": "123456",
+        "comment": "A good book!!",
+        "rate": 5,
+        "elementId": "5d318e1a8541744830bef138",
+        "createdAt": "2019-08-01T12:46:46.895Z"
     }
 ]
